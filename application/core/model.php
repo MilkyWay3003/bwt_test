@@ -1,6 +1,5 @@
 <?
 
-namespace Core;
 
 class Model 
 {

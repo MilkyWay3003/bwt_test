@@ -7,11 +7,9 @@ class Route
 	{
 		$controller_name = 'SignupController';
 		$action_name = 'Index';
-		
-		$routes = explode('/', $_SERVER['REQUEST_URI']);
-		/*echo $routes;*/
 
-	
+		$routes = explode('/', $_SERVER['REQUEST_URI']);
+		
 		if ( !empty($routes[1]) )
 		{	
 			$controller_name = $routes[1];
@@ -27,10 +25,10 @@ class Route
 		$action_name = 'action'.$action_name;
 
 		
-		/*echo "Model: $model_name <br>";
+		echo "Model: $model_name <br>";
 		echo "Controller: $controller_name <br>";
-		echo "Action: $action_name <br>";*/
-		
+		echo "Action: $action_name <br>";
+	
 
 		$model_file = $model_name.'.php';
 		$model_path = "application/models/".$model_file;
@@ -38,7 +36,7 @@ class Route
 		{
 			include $model_path;
 		}
-
+        
 		$controller_file = $controller_name.'.php';		
 		$controller_path = "application/controllers/".$controller_file;	
 		if(file_exists($controller_path))
@@ -47,12 +45,10 @@ class Route
 		}
 		else
 		{
-			echo "404 Page not found"; //add exeption
+			echo "404 Page not found"; //add exсeption
 		}
-
-		echo "Controller: $controller_name <br>";
-		echo "Action: $action_name <br>";
 		
+
 		$controller = new $controller_name;
 		$action = $action_name;
 		
@@ -62,10 +58,10 @@ class Route
 		}
 		else
 		{
-			echo "404 Page not found"; //add exeption 
+			echo "404 Page not found"; //add exсeption 
 		}
-	
-	}
+
+}
 
 }
 

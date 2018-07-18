@@ -6,15 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="description" content="bwttest task"/>
     <meta name="author" content="MilkyWay"/>
-    <base href="/">
-    <!-- css -->
+    
     <link href="css/bootstrap.min.css" rel="stylesheet"/>
     <link href="css/style.css" rel="stylesheet"/>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
    
 
 </head>
 <body>
-    <?php include $prefix_views.$content_view.'.php'; ?>
+    <? include 'application/views/'.$content_view.'.php'; ?>
                 
 </body>
 </html>

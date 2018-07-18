@@ -1,6 +1,6 @@
 <div class="container">
     <div class="col-md-6 col-md-offset-3">
-      <form class="form-signin" method="post" action="#">
+      <form class="form-signin" method="post" action="SignupController/Submit">
         <h2 class="form-signin-heading">Please sign up</h2>
 
         <label for="inputFirstName" class="sr-only">FirstName</label>
@@ -29,7 +29,7 @@
         <label for="inputDateBirthDay" class="sr-only">DateBirthDay</label>
         <input type="date" id="inputDateBirthDay" class="form-control" placeholder="DateBirthDay" name="datebirthday">
 
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit" name="submit">Sign up</button>
       </form>
     </div>
 </div>
