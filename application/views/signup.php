@@ -26,9 +26,8 @@
         <label for="inputRepeatPassword" class="sr-only">Repeat Password</label>
         <input type="password" id="inputRepeatPassword" class="form-control" placeholder="Repeat Password" required name="passwordrepeat">
 
-        <label for="inputGender" class="sr-only">Gender</label>
-        <input type="" id="inputGender" class="form-control" placeholder="Gender" name="gender">
-        <select name="" id="">
+        <input type="text" id="inputGender" class="sr-only" placeholder="Gender">
+        <select name="gender" id="inputGender">
             <option value="male">Male</option>
             <option value="female">Female</option>
             <option value="not specified">Not specified</option>
