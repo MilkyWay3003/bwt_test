@@ -28,7 +28,7 @@ INSERT INTO feedback(messages, datacreate, id_user) VALUES
   ("cool", "2017-07-20", 1),
   ("good", "2017-07-21", 2),
   ("norm", "2017-07-19", 3);
-  
+
 
 SELECT datacreate, firstname, lastname, messages
 FROM user INNER JOIN feedback ON user.id=feedback.id_user

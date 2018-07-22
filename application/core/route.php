@@ -40,30 +40,38 @@ class Route
         
 		$controller_file = $controller_name.'.php';		
 		$controller_path = "application/controllers/".$controller_file;	
-		if(file_exists($controller_path))
+		
+		try
 		{
-			include $controller_path;
+			if(file_exists($controller_path))
+			{
+				include $controller_path;
+			}
+			else
+			{
+			throw new Exception("404 Page not found"); //add exсeption try catch throw
+			}
 		}
-		else
-		{
-			echo "404 Page not found"; //add exсeption
-		}
+
+		catch(Exception $e) {
+			echo 'Message: ' .$e->getMessage();
+		  }
 		
 
 		$controller = new $controller_name;
 		$action = $action_name;
-		
-		if(method_exists($controller, $action))
-		{
-			$controller->$action();
+
+		try {
+			if(method_exists($controller, $action)) {
+				$controller->$action();
+			} else {
+				throw new Exception("404 Page not found"); //add exсeption try catch throw
+			}
 		}
-		else
-		{
-			echo "404 Page not found"; //add exсeption 
+		catch(Exception $e) {
+			echo 'Message: ' .$e->getMessage();
 		}
 
 }
 
 }
-
-    

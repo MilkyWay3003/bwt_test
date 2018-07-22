@@ -8,7 +8,7 @@
       <div class="form-group">
         <label for="inputFirstName" class="sr-only">FirstName</label>
         <input type="text" id="inputFirstName" class="form-control" placeholder="FirstName" required name="firstname" autofocus>
-        </div>
+      </div>
       
       <div class="form-group">
         <label for="inputEmail" class="sr-only">Email address</label>

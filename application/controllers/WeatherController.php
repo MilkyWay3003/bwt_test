@@ -3,18 +3,18 @@
 
 class WeatherController extends Controller
 {
-    public $weather; 
+    public $weather;
 
     public function actionIndex()
     {
-        $data = [];        
-        $weather = new Weather;      
-        $data = $weather->parser(); 
-        $this->view->generate('template','weather',  $data);
-        
-        $data = $weather->myparser(); 
-        $this->view->generate('template','weather',  $data);
-         
+        $weather = new Weather;
+
+        $this->view->generate('template','weather', [
+            'data' => [
+                $weather->parser(),
+                $weather->myparser(),
+            ],
+        ]);
     }
 
 }

@@ -9,14 +9,18 @@
     </tr>
     </thead>
     <tbody>
-    <tr>
-      <td><?=$data[1][0]?></td>
-      <td><?=$data[1][1]?>
-          <?=$data[1][2]?>
-          <br>  
-          <?=$data[1][3]?></td>
-    </tr>    
-  </tbody>  
+    <? foreach($feedbacks as $feedback): ?>
+      <tr>
+        <td><?=$feedback['datacreate']?></td>
+        <td>
+          <?=$feedback['firstname']?>
+          <?=$feedback['lastname']?>
+          <br>
+          <?=$feedback['messages']?>
+        </td>
+      </tr>
+    <? endforeach; ?>
+  </tbody>
   </table>
  </div>
 </div>
