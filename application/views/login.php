@@ -1,4 +1,11 @@
 <div class="container">
+ <? if (isset($errors) && is_array($errors)): ?>
+      <ul>
+        <? foreach ($errors as $error): ?>
+          <li><?=$error?></li>
+        <? endforeach; ?>
+      </ul>
+    <? endif ?>
     <div class="col-md-6 col-md-offset-3">
       <form class="form-signin" method="post" action="/SignupController/Login">
         <h2 class="form-signin-heading">Please sign in</h2>
