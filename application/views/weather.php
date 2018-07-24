@@ -8,7 +8,7 @@
       <table class="table table-bordered table-striped">
       <thead>
       <tr>
-        <th colspan="2">Погода в Запорожье  <?=date(DATE_RFC822)?></th>
+        <th colspan="2">Погода в Запорожье  <?=date("d-m-Y")?></th>
       </tr>
       </thead>
       <tbody>

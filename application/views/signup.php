@@ -8,7 +8,7 @@
     <? endif ?>
 
     <div class="col-md-6 col-md-offset-3">
-      <form class="form-signin" method="post" action="/SignupController/Submit">
+      <form class="form-signin" method="post" action="/UserController/Submit">
         <h2 class="form-signin-heading">Please sign up</h2>
 
         <div class="form-group">
@@ -53,7 +53,7 @@
       </form>
       <br><br>
       <div class="col-md-12 text-center">
-        <a href="/SignupController/Login" class="btn btn-default">Я уже зарегистрирован</a>
+        <a href="/UserController/Login" class="btn btn-default">Я уже зарегистрирован</a>
       </div>
     </div>
 </div>

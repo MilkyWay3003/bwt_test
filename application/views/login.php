@@ -7,7 +7,7 @@
       </ul>
     <? endif ?>
     <div class="col-md-6 col-md-offset-3">
-      <form class="form-signin" method="post" action="/SignupController/Login">
+      <form class="form-signin" method="post" action="/UserController/Login">
         <h2 class="form-signin-heading">Please sign in</h2>
 
         <div class="form-group">

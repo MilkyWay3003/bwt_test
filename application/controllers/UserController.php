@@ -1,9 +1,9 @@
 <?
 
-
-class SignupController extends Controller
+class UserController extends Controller
 {
-    public function actionIndex() {
+    public function actionIndex()
+    {
         $data = [];
         if (is_array($_SESSION) && array_key_exists('errors', $_SESSION)) {
             $data['errors'] = $_SESSION['errors'];
@@ -13,7 +13,8 @@ class SignupController extends Controller
         $this->view->generate('template', 'signup', $data);
     }
 
-    public function actionSubmit() {
+    public function actionSubmit()
+    {
         $firstname = false;
         $lastname = false;
         $email = false;
@@ -21,7 +22,6 @@ class SignupController extends Controller
         $pasw2=false;
         $gender=false;
         $birthday=false;
-
 
         if (isset($_POST['submit'])) {
             $firstname = $_POST['firstname'];
@@ -32,33 +32,43 @@ class SignupController extends Controller
             $gender = $_POST['gender'];
             $birthday = $_POST['datebirthday'];
 
-            $errors = false;
+            $errors = [];
 
-            if (!User::checkFirstname($firstname)) {
+            if (!User::isValidFirstName($firstname)) {
                 $errors[] = 'Имя не должно быть короче 2-х символов';
             }
 
-            if (!User::checkLastname($lastname)) {
+            if (!User::isValidLastName($lastname)) {
                 $errors[] = 'фамилия не должна быть короче 2-х символов';
             }
 
-            if (!User::checkPasswordLength($pasw1)) {
+            if (!User::isValidLengthPassword($pasw1)) {
                 $errors[] = 'Пароль не должен быть короче 6-ти символов';
             }
 
-            if (!User::checkPassword($pasw1,$pasw2)) {
+            if (!User::isValidPassword($pasw1,$pasw2)) {
                 $errors[] = 'Пароли не совпадают';
             }
 
-            if (!User::checkEmail($email)) {
+            if (!User::isValidEmail($email)) {
                 $errors[] = 'Неправильный email';
             }
-            if (User::checkEmailExists($email)) {
+
+            if (User::isEmailExists($email)) {
                 $errors[] = 'Такой email уже используется';
             }
 
-            if ($errors == false) {
-                User::register($firstname,$lastname,$email,$pasw1,$gender,$birthday);
+            if (count($errors) === 0) {
+                $result = User::registerUser($firstname,$lastname,$email,$pasw1,$gender,$birthday);
+
+                if ($result) {
+                    $errors[] = "Данные успешно сохранены!";
+                } else {
+                    $errors[] = "Произошла ошибка, пожалуйста повторите попытку.";
+                }
+
+                User::auth();
+                $_SESSION['errors'] = $errors;
                 header('Location: /WeatherController/Index');
             } else {
                 $_SESSION['errors'] = $errors;
@@ -67,7 +77,8 @@ class SignupController extends Controller
         }
     }
 
-    public function actionLogin() {
+    public function actionLogin()
+    {
         $email = false;
         $password = false;
         $errors = false;
@@ -77,20 +88,20 @@ class SignupController extends Controller
             $email = $_POST['email'];
             $password = $_POST['password'];
 
-            if (!User::checkEmail($email)) {
+            if (!User::isValidEmail($email)) {
                 $errors[] = 'Неправильный email';
             }
 
-            if (!User::checkPasswordLength($password)) {
+            if (!User::isValidLengthPassword($password)) {
                 $errors[] = 'Пароль не должен быть короче 6-ти символов';
             }
 
-            $userId = User::checkUserData($email, $password);
+            $userId = User::userExists($email, $password);
 
             if ($userId == false) {
                 $errors[] = 'Неправильные данные для входа на сайт';
             } else {
-                User::auth($userId);
+                User::auth();
                 header('Location: /WeatherController/Index');
             }
         }
@@ -100,9 +111,9 @@ class SignupController extends Controller
         ]);
     }
 
+    public function actionLogout()
+    {
+        $_SESSION = [];
+        header('Location: /');
+    }
 }
-
-    
-
-   
-

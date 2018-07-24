@@ -1,8 +1,13 @@
-
-
 <div class="container">
+<? if (isset($errors) && is_array($errors)): ?>
+      <ul>
+        <? foreach ($errors as $error): ?>
+          <li><?=$error?></li>
+        <? endforeach; ?>
+      </ul>
+    <? endif ?>
   <div class="col-md-6 col-md-offset-3">
-    <form class="form-signin" method="post" action="FeedbackController/Submit">
+    <form class="form-signin" method="post" action="/FeedbackController/Submit">
       <h2 class="form-signin-heading">Feedback</h2>
 
       <div class="form-group">

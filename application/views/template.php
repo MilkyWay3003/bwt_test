@@ -10,8 +10,6 @@
     <link href="/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="/css/style.css" rel="stylesheet"/>
     <script src='https://www.google.com/recaptcha/api.js'></script>
-
-
 </head>
 <body>
     <div class="container">
@@ -30,10 +28,15 @@
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/FeedbackController/Index">Leave feedback</a></li>
-                </ul>
+                    <ul class="nav navbar-nav">
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/FeedbackController/Index">Leave feedback</a></li>
+                    </ul>
+                    <? if (isset($_SESSION['login']) && $_SESSION['login']): ?>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="/UserController/Logout">Log out</a></li>
+                        </ul>
+                    <? endif; ?>
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
         </nav>

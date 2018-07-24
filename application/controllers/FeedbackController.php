@@ -1,23 +1,38 @@
 <?
 require "vendor/autoload.php";
+include_once('application/models/user.php');
+
+use ReCaptcha\ReCaptcha;
 
 class FeedbackController extends Controller
 {
-    public $feedbacks;
-    
-    public function actionIndex() {
+    protected $feedback;
+
+    public function __construct()
+    {
+        $this->feedback = new Feedback;
+    }
+
+    public function actionIndex()
+    {
         $data = [];
+        if (is_array($_SESSION) && array_key_exists('errors', $_SESSION)) {
+            $data['errors'] = $_SESSION['errors'];
+            unset($_SESSION['errors']);
+        }
+
         $this->view->generate('template','feedback',  $data);
     }
 
-    public function actionSubmit() {
+    public function actionSubmit()
+    {
         $email = false;
         $password = false;
         $message = false;
         $errors = false;
 
         $secret = '6Lfh6GQUAAAAAJcFpEk5wdakPmnmxgdkp_anQKv0';
-        $reCaptcha = new \ReCaptcha\ReCaptcha($secret);
+        $reCaptcha = new ReCaptcha($secret);
 
         if (isset($_POST['g-recaptcha-response'])) {
             $resp = $reCaptcha->verify(
@@ -32,40 +47,53 @@ class FeedbackController extends Controller
                     $messages = $_POST['message'];
                     $datecreate = date("Y-m-d");
 
-                    $feedbacks = new Feedback;
-
-                    if ($feedbacks->checkFirstname($firstname)) {
+                    if (!User::isValidFirstName($firstname)) {
                         $errors[] = 'Имя не должно быть короче 2-х символов';
                     }
 
-                    if ($feedbacks->checkEmail($email)) {
+                    if (!User::isValidEmail($email)) {
                         $errors[] = 'Неправильный email';
                     }
 
-                    if (!$feedbacks->CheckLengthMessage($messages)) {
+                    if (!User::isValidLengthMessage($messages)) {
                         $errors[] = 'Сообщение не должно быть короче 20-ти и больше 255 символов';
                     }
 
-                    $userId = Feedback::FindUser($email);
+                    $userId = User::userExists($email, $password);
 
                     if ($errors == false) {
-                        $feedbacks->Insertfeedback($messages, $datecreate, $userId);
-                        header('Location: /FeedbackController/Listfeedbacks');
+                        $result = $this->feedback->InsertFeedback($messages, $datecreate, $userId);
+
+                        if ($result) {
+                            $errors[] = "Ваш отзыв успешно сохранен!";
+                        } else {
+                            $errors[] = "Произошла ошибка, пожалуйста повторите попытку.";
+                        }
+
+                        header('Location: /FeedbackController/ListFeedbacks');
                     } else {
                         $_SESSION['errors'] = $errors;
-                        header('Location: /');
+                        header('Location: /FeedbackController/Index');
                     }
                 }
+            } else {
+                $errors[] = 'Заполните CAPTCHA';
+                $_SESSION['errors'] = $errors;
+                header('Location: /FeedbackController/Index');
             }
         }
     }
 
-    public function actionListfeedbacks() {
-        $feedbacks = new Feedback;
-        $feedbacksList = $feedbacks->GetListfeedbacks();
-        $this->view->generate('template', 'listfeedbacks', [
-            'feedbacks' => $feedbacksList,
-        ]);
+    public function actionListFeedbacks()
+    {
+        if (isset($_SESSION['login']) && $_SESSION['login']) {
+            $feedbacksList = $this->feedback->GetListFeedbacks();
+            $this->view->generate('template', 'listfeedbacks', [
+                'feedbacks' => $feedbacksList,
+            ]);
+        } else {
+            header('Location: /');
+        }
     }
 
 

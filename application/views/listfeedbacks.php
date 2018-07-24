@@ -11,7 +11,7 @@
     <tbody>
     <? foreach($feedbacks as $feedback): ?>
       <tr>
-        <td><?=$feedback['datacreate']?></td>
+        <td><?=$feedback['datecreate']?></td>
         <td>
           <?=$feedback['firstname']?>
           <?=$feedback['lastname']?>

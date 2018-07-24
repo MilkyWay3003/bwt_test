@@ -16,7 +16,7 @@ class Weather extends Model
 
         $temperature = $dom->find('.higher')->find('.temp')->find('.c', 0);
         $data[1] = $temperature->text;
-        
+
         $cloudness = $dom->find('.higher')->find('.cloudness')->find('td', 0);
         $data[2] = $cloudness->text;
 
